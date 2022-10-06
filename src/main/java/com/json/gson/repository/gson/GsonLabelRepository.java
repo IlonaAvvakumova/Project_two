@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class GsonLabelRepository implements LabelRepository {
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\CRUD_app\\src\\main\\resources\\labels.json";
+    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\Project_two\\src\\main\\resources\\labels.json";
 
     @Override
     public List<Label> getAll() {

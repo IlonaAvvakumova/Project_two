@@ -29,8 +29,7 @@ public class DevelopersJdbcDemo {
         System.out.println("Executing statement...");
         statement = connection.createStatement();
 
-        String sql;
-        sql = "SELECT * FROM developers";
+        String sql = "SELECT * FROM developers";
 
         ResultSet resultSet = statement.executeQuery(sql);
 

@@ -1,0 +1,34 @@
+package com.json.gson.service;
+
+import com.json.gson.model.Label;
+import com.json.gson.repository.LabelRepository;
+import com.json.gson.repository.gson.GsonLabelRepository;
+
+public class LabelService {
+    private final LabelRepository labelRepository;
+
+
+    public LabelService() {
+        this.labelRepository = new GsonLabelRepository();
+    }
+
+    public LabelService(LabelRepository labelRepository) {
+        this.labelRepository = labelRepository;
+    }
+
+    public Label createLabel(Label label) {
+        return labelRepository.create(label);
+    }
+
+    public Label updateLabel(Label label) {
+        return labelRepository.update(label);
+    }
+
+    public void deleteLabel(Integer id) {
+        labelRepository.deleteById(id);
+    }
+
+    public Label getLabel(Integer id) {
+        return labelRepository.getById(id);
+    }
+}

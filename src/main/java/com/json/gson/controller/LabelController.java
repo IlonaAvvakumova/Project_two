@@ -5,25 +5,28 @@ import com.json.gson.model.Label;
 import com.json.gson.repository.LabelRepository;
 
 import com.json.gson.repository.gson.GsonLabelRepository;
+import com.json.gson.service.LabelService;
 
 public class LabelController {
-    private final LabelRepository labelRepository = new GsonLabelRepository();
+   /* private final LabelRepository labelRepository = new GsonLabelRepository();*/
+    private final LabelService labelService = new LabelService();
+
     public Label createLabel(String name){
         Label label = new Label();
         label.setName(name);
-        return labelRepository.create(label);
+        return labelService.createLabel(label);
     }
     public void updateLabel(Integer id, String name){
         Label label = new Label();
         label.setId(id);
         label.setName(name);
-         labelRepository.update(label);
+        labelService.updateLabel(label);
     }
     public void deleteLabel(Integer id){
-             labelRepository.deleteById(id);
+        labelService.deleteLabel(id);
     }
 
     public Label getLabelById(Integer id){
-        return labelRepository.getById(id);
+        return labelService.getLabel(id);
     }
 }

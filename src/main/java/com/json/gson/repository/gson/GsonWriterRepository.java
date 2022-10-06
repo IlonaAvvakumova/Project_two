@@ -13,7 +13,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class GsonWriterRepository implements WriterRepository {
-    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\CRUD_app\\src\\main\\resources\\writer.json";
+    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\Project_two\\src\\main\\resources\\writer.json";
     private final Path filePath = Path.of(LABEL_PATH);
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 

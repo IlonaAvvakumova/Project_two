@@ -6,8 +6,8 @@ public class MaintTest {
     public static void main(String[] args) {
 
         MainView mainView = new MainView();
-       // mainView.mainMenuPost();
-        mainView.mainMenuWriter();
-      //  mainView.mainMenuLabel();
+      //  mainView.mainMenuPost();
+       // mainView.mainMenuWriter();
+     //   mainView.mainMenuLabel();
     }
 }

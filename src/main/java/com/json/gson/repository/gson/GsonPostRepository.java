@@ -16,7 +16,7 @@ import java.util.*;
 
 
 public class GsonPostRepository implements PostRepository {
-    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\CRUD_app\\src\\main\\resources\\post.json";
+    private final String LABEL_PATH = "D:\\java\\home\\avvakumova\\Project_two\\src\\main\\resources\\post.json";
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     @Override
