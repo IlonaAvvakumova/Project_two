@@ -29,7 +29,10 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="7b274785-fd6a-4a37-aef5-768193ba2122">
-      <console name="MySQLBaseOne" type="STANDARD" schema="proselyte_tutorials" session="Main" />
+      <console name="MySQLBaseOne" type="STANDARD" schema="liqui_base_db_test" session="Main"><![CDATA[SELECT * FROM book;
+INSERT INTO book (id,Author,Title,Price) 
+VALUES (1, 'Булгаков М.А.', 'Мастер и Маргарита',100);
+SELECT * FROM databasechangelog;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">

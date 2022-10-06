@@ -15,9 +15,7 @@
                 <!--<constraints nullable="false"/>-->
             </column>
             <column name="Price" type="INT"/>
-            <column name="Amount" type="INT" autoIncrement="true">
-                <constraints nullable="false"/>
-            </column>
+
         </createTable>
     </changeSet>
 
