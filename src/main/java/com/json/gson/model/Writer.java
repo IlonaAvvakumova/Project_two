@@ -2,12 +2,11 @@ package com.json.gson.model;
 
 import java.util.List;
 
-//Writer (id, firstName, lastName, List<Post> posts)
 public class Writer {
-    Integer id;
-    String firstName;
-    String lastName;
-List<Post> writerList;
+  private   Integer id;
+    private  String firstName;
+    private  String lastName;
+List<Post> writers;
 
     public Integer getId() {
         return id;
@@ -33,12 +32,12 @@ List<Post> writerList;
         this.lastName = lastName;
     }
 
-    public List<Post> getWriterList() {
-        return writerList;
+    public List<Post> getWriters() {
+        return writers;
     }
 
-    public void setWriterList(List<Post> writerList) {
-        this.writerList = writerList;
+    public void setWriters(List<Post> writers) {
+        this.writers = writers;
     }
 
     @Override
@@ -47,7 +46,7 @@ List<Post> writerList;
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", writerList=" + writerList +
+                ", writerList=" + writers +
                 '}';
     }
 }

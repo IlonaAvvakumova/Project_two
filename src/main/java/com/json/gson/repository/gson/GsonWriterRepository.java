@@ -49,7 +49,7 @@ public class GsonWriterRepository implements WriterRepository {
             if(w.getId().equals(writer.getId())) {
                 w.setFirstName(writer.getFirstName());
                 w.setLastName(writer.getLastName());
-                w.setWriterList(writer.getWriterList());
+                w.setWriters(writer.getWriters());
             }
         });
         writeJsonWriter(writers);

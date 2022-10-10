@@ -1,6 +1,10 @@
 package com.json.gson.view.View;
 
 import com.json.gson.model.Label;
+import com.json.gson.view.LabelView;
+import com.json.gson.view.MainView;
+import com.json.gson.view.PostView;
+import com.json.gson.view.WriterView;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -9,15 +13,14 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class MainViewTest {
     @Mock
-            MainView main;
+    MainView main;
     LabelView labelView;
      PostView postView;
     @Spy
-     WriterView writerView = new WriterView();
+    WriterView writerView = new WriterView();
     List<Label> labels;
 
 

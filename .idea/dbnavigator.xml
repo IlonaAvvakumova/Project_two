@@ -32,7 +32,11 @@
       <console name="MySQLBaseOne" type="STANDARD" schema="liqui_base_db_test" session="Main"><![CDATA[SELECT * FROM book;
 INSERT INTO book (id,Author,Title,Price) 
 VALUES (1, 'Булгаков М.А.', 'Мастер и Маргарита',100);
-SELECT * FROM databasechangelog;]]></console>
+SELECT * FROM databasechangelog;
+INSERT INTO book (id,Author,Title,Price) 
+VALUES (2, 'Дюма', 'Три мушкетера',624);
+SELECT * FROM book;
+SELECT * FROM databasechangeloglock;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -52,7 +56,7 @@ SELECT * FROM databasechangelog;]]></console>
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/java/com/json/gson/testMySQL.sql" connection-id="7b274785-fd6a-4a37-aef5-768193ba2122" session-id="MAIN" current-schema="education" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/java/com/json/gson/test/testMySQL.sql" connection-id="7b274785-fd6a-4a37-aef5-768193ba2122" session-id="MAIN" current-schema="education" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />

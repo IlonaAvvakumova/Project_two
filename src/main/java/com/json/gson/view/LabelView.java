@@ -1,4 +1,4 @@
-package com.json.gson.view.View;
+package com.json.gson.view;
 
 import com.json.gson.controller.LabelController;
 import com.json.gson.model.Label;

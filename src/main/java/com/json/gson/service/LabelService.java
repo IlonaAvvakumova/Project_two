@@ -1,15 +1,18 @@
 package com.json.gson.service;
 
+import com.json.gson.jdbc.JdbcLabelRepositoryImpl;
 import com.json.gson.model.Label;
 import com.json.gson.repository.LabelRepository;
 import com.json.gson.repository.gson.GsonLabelRepository;
+
+import java.util.List;
 
 public class LabelService {
     private final LabelRepository labelRepository;
 
 
     public LabelService() {
-        this.labelRepository = new GsonLabelRepository();
+        this.labelRepository = new JdbcLabelRepositoryImpl();
     }
 
     public LabelService(LabelRepository labelRepository) {
@@ -30,5 +33,10 @@ public class LabelService {
 
     public Label getLabel(Integer id) {
         return labelRepository.getById(id);
+    }
+
+    public List<Label> getAllLab() {
+
+        return labelRepository.getAll();
     }
 }

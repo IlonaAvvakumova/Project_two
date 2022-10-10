@@ -1,17 +1,14 @@
-package com.json.gson;
+package com.json.gson.test;
 
 import java.sql.*;
 
 public class DevelopersJdbcDemo {
-    /**
-     * JDBC Driver and database url
-     */
+
+
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
     static final String DATABASE_URL = "jdbc:mysql://localhost/PROSELYTE_TUTORIALS?useSSL=false";
 
-    /**
-     * User and Password
-     */
+
     static final String USER = "root";
     static final String PASSWORD = "159753";
 

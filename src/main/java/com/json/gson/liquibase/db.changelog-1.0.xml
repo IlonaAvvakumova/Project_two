@@ -19,6 +19,17 @@
         </createTable>
     </changeSet>
 
+  <changeSet author="bob" id="1">
+    <createTable tableName="department1234">
+      <column name="id" type="int">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+      <column name="firstname" type="varchar(50)"/>
+      <column name="lastname" type="varchar(50)">
 
+      </column>
+      <column name="active" type="boolean" defaultValueBoolean="true"/>
+    </createTable>
+  </changeSet>
 
 </databaseChangeLog>

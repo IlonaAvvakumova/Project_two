@@ -1,4 +1,4 @@
-package com.json.gson;
+/*package com.json.gson.test;
 import  java.sql.*;
 public class SQL_test {
     
@@ -10,5 +10,5 @@ void method() {
         e.printStackTrace();
     }
 }
-}
+}*/
 

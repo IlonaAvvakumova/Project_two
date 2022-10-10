@@ -55,7 +55,7 @@ public class GsonPostRepository implements PostRepository {
             if (p.getId().equals(post.getId())) {
                 p.setContent(post.getContent());
                 p.setUpdated(new Date().getTime());
-                p.setListLab(post.getListLab());
+                p.setLabels(post.getLabels());
                // p.setGetTine(new SimpleDateFormat("dd.MM.yyyy").format(new Date()));
 
             }

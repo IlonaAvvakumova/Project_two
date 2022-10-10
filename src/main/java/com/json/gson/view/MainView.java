@@ -1,4 +1,4 @@
-package com.json.gson.view.View;
+package com.json.gson.view;
 
 
 import java.util.Scanner;

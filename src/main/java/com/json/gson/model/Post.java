@@ -4,25 +4,20 @@ import java.util.List;
 
 
 public class Post {
-   private Integer id;
-   private String content;
-  private   long updated; // дата создания
-  private   long created; // дата изменения
-//    private String getTine;
-  private   List<Label> listLab;
+    private Integer id;
+    private String content;
+    private long updated;
+    private long created;
+    private PostStatus status;
+    private List<Label> labels;
 
-    @Override
-    public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", updated=" + updated +
-                ", created=" + created +
-
-                ", listLab=" + listLab +
-                '}';
+    public PostStatus getStatus() {
+        return status;
     }
 
+    public void setStatus(PostStatus status) {
+        this.status = status;
+    }
 
     public Integer getId() {
         return id;
@@ -56,12 +51,23 @@ public class Post {
         this.created = created;
     }
 
-    public List<Label> getListLab() {
-        return listLab;
+    public List<Label> getLabels() {
+        return labels;
     }
 
-    public void setListLab(List<Label> listLab) {
-        this.listLab = listLab;
+    public void setLabels(List<Label> labels) {
+        this.labels = labels;
     }
 
+    @Override
+    public String toString() {
+        return "Post{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", updated=" + updated +
+                ", created=" + created +
+
+                ", listLab=" + labels +
+                '}';
+    }
 }

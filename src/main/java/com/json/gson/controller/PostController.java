@@ -2,8 +2,6 @@ package com.json.gson.controller;
 
 import com.json.gson.model.Label;
 import com.json.gson.model.Post;
-import com.json.gson.repository.PostRepository;
-import com.json.gson.repository.gson.GsonPostRepository;
 import com.json.gson.service.PostService;
 
 import java.util.List;
@@ -21,7 +19,7 @@ public class PostController {
         Post post = new Post();
         post.setId(id);
         post.setContent(text);
-        post.setListLab(labelList);
+        post.setLabels(labelList);
         postService.update(post);
         return post;
     }
