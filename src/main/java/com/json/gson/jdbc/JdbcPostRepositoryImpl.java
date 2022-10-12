@@ -1,7 +1,9 @@
 package com.json.gson.jdbc;
 
 import com.json.gson.model.Label;
-import com.json.gson.repository.LabelRepository;
+import com.json.gson.model.Post;
+import com.json.gson.model.PostStatus;
+import com.json.gson.repository.PostRepository;
 import com.json.gson.utils.JdbcUtils;
 
 import java.sql.PreparedStatement;
@@ -10,28 +12,26 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcLabelRepositoryImpl implements LabelRepository {
+public class JdbcPostRepositoryImpl implements PostRepository {
     private final String GET_ALL_LABELS = "SELECT * FROM labels";
-
-    private Label convertLabel(ResultSet rs) {
-        return null;
-    }
-
     @Override
-    public List<Label> getAll() {
-        List<Label> labels = new ArrayList<>();
+    public List<Post> getAll() {
+
+        List<Post> posts = new ArrayList<>();
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_ALL_LABELS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Label l = new Label();
-                l.setId(resultSet.getInt("id"));
-                l.setName(resultSet.getString("name"));
-                labels.add(l);
+                Post p = new Post();
+                p.setId(resultSet.getInt("id"));
+                p.setContent(resultSet.getString("Content"));
+                p.setCreated(resultSet.getLong("Created"));
+                p.setUpdated(resultSet.getLong("Updated"));
+                posts.add(p);
             }
             preparedStatement.close();
             resultSet.close();
-            return labels;
+            return posts;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -39,17 +39,18 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
-    public Label getById(Integer integer) {
+    public Post getById(Integer integer) {
+
         return null;
     }
 
     @Override
-    public Label create(Label label) {
+    public Post create(Post post) {
         return null;
     }
 
     @Override
-    public Label update(Label label) {
+    public Post update(Post post) {
         return null;
     }
 
