@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
+
+    <changeSet id="create_table" author="Ilona">
+        <createTable tableName="labels">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(31)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create_table2" author="Ilona">
+        <createTable tableName="posts">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="varchar(50)"/>
+            <column name="writer_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_post_writer" references="writers(id)"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+    <changeSet id="create_table3" author="Ilona">
+        <createTable tableName="writers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="firstName" type="varchar(50)"/>
+            <column name="lastName" type="varchar(50)"/>
+            <column name="post_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_post_writer" references="posts(id)"/>
+            </column>
+            <column name="label_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_label_writer" references="labels(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <!--     labels -->
+    <!--     posts  === writer_id FK  -->
+    <!--     post_labels (post_id + label_id) FK -->
+    <!--     writers (post_id + label_id) FK -->
+</databaseChangeLog>
