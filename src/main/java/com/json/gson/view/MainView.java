@@ -7,8 +7,24 @@ public class MainView {
     private final LabelView labelView = new LabelView();
     private final PostView postView = new PostView();
     private final WriterView writerView = new WriterView();
-
     private final Scanner scan = new Scanner(System.in);
+
+    public void menu(){
+        System.out.println("Напиши название таблицы: Label, Post или Writer");
+        String s = scan.nextLine();
+        System.out.println("Выберете операцию: Создать, Обновить, Удалить");
+        if (s.equals("Label")){
+            mainMenuLabel();
+        }else if (s.equals("Post")){
+            mainMenuPost();
+        }else if(s.equals("Writer")){
+            mainMenuWriter();
+        }else{
+            System.out.println("Вы ввели не корректное значение");
+            menu();
+        }
+
+    }
    public void mainMenuLabel(){
 String input = scan.nextLine();
 switch (input) {

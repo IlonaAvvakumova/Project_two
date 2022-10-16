@@ -2,14 +2,13 @@ package com.json.gson.service;
 
 import com.json.gson.model.Writer;
 import com.json.gson.repository.WriterRepository;
-import com.json.gson.repository.gson.GsonLabelRepository;
-import com.json.gson.repository.gson.GsonWriterRepository;
+import com.json.gson.repository.jdbc.JdbcWriterRepositoryImpl;
 
 public class WriterService {
     private final WriterRepository writerRepository;
 
     public WriterService(){
-        this.writerRepository = new GsonWriterRepository();
+        this.writerRepository = new JdbcWriterRepositoryImpl();
     }
 
     public WriterService(WriterRepository writerRepository) {

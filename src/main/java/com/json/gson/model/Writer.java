@@ -3,10 +3,10 @@ package com.json.gson.model;
 import java.util.List;
 
 public class Writer {
-  private   Integer id;
-    private  String firstName;
-    private  String lastName;
-List<Post> writers;
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    private List<Post> writers;
 
     public Integer getId() {
         return id;

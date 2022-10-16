@@ -1,8 +1,8 @@
 package com.json.gson.model;
 
 public class Label {
-   private Integer id;
-  private   String name;
+    private Integer id;
+    private String name;
 
     public Integer getId() {
         return id;

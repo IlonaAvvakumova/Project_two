@@ -1,4 +1,4 @@
-package com.json.gson.jdbc;
+package com.json.gson.repository.jdbc;
 
 import com.json.gson.model.Label;
 import com.json.gson.repository.LabelRepository;
@@ -12,14 +12,13 @@ import java.util.List;
 
 public class JdbcLabelRepositoryImpl implements LabelRepository {
     private final String GET_ALL_LABELS = "SELECT * FROM labels";
-
-    private Label convertLabel(ResultSet rs) {
-        return null;
-    }
+    private final String UPDATE_ALL_LABELS = "UPDATE labels SET name = 'Igor' where id = 3;";
+    private final String CREATE_ALL_LABELS = " insert into labels (name) values (\"Morozov\");";
+    private final String DELETE_ALL_LABELS = " DELETE FROM labels where id = 4;";
+    private List<Label> labels = new ArrayList<>();
 
     @Override
     public List<Label> getAll() {
-        List<Label> labels = new ArrayList<>();
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_ALL_LABELS)) {
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -40,21 +39,36 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
 
     @Override
     public Label getById(Integer integer) {
-        return null;
+        getAll();
+        return labels.stream().filter(a -> a.getId().equals(integer)).findFirst().orElse(null);
     }
 
     @Override
     public Label create(Label label) {
-        return null;
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(CREATE_ALL_LABELS)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return label;
     }
 
     @Override
     public Label update(Label label) {
-        return null;
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(UPDATE_ALL_LABELS)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return label;
     }
 
     @Override
     public void deleteById(Integer id) {
-
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_ALL_LABELS)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 }

@@ -1,10 +1,6 @@
 package com.json.gson.controller;
 
 import com.json.gson.model.Label;
-
-import com.json.gson.repository.LabelRepository;
-
-import com.json.gson.repository.gson.GsonLabelRepository;
 import com.json.gson.service.LabelService;
 
 import java.util.List;

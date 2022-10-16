@@ -1,10 +1,8 @@
 package com.json.gson.service;
 
-import com.json.gson.jdbc.JdbcLabelRepositoryImpl;
+import com.json.gson.repository.jdbc.JdbcLabelRepositoryImpl;
 import com.json.gson.model.Label;
 import com.json.gson.repository.LabelRepository;
-import com.json.gson.repository.gson.GsonLabelRepository;
-
 import java.util.List;
 
 public class LabelService {

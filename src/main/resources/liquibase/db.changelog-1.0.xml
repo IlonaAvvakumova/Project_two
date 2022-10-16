@@ -14,7 +14,14 @@
         </createTable>
     </changeSet>
 
+
     <changeSet id="create_table2" author="Ilona">
+        <createTable tableName="post_labels">
+
+            <column name="post_id" type="int"/>
+            <column name="label_id" type="int"/>
+
+        </createTable>
         <createTable tableName="posts">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>

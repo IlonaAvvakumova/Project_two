@@ -12,8 +12,11 @@ public class JdbcUtils {
     private static Connection connection = null;
 
     private static Connection  getConnection() throws SQLException, ClassNotFoundException {
-        Class.forName(JDBC_DRIVER);
-        return DriverManager.getConnection(DATABASE_URL,USER,PASSWORD);
+        if(connection == null) {
+            Class.forName(JDBC_DRIVER);
+            return DriverManager.getConnection(DATABASE_URL,USER,PASSWORD);
+        }
+        return connection;
     }
     public static PreparedStatement createStatement(String sql) throws SQLException {
         try {
@@ -22,8 +25,6 @@ public class JdbcUtils {
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             return null;
-        }/*finally {
-            connection.close(); //надо ли тут?
-        }*/
+        }
     }
 }

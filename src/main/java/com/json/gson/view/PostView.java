@@ -4,9 +4,6 @@ import com.json.gson.controller.LabelController;
 import com.json.gson.controller.PostController;
 import com.json.gson.model.Label;
 import com.json.gson.model.Post;
-import com.json.gson.repository.LabelRepository;
-import com.json.gson.repository.gson.GsonLabelRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -29,7 +26,6 @@ public class PostView {
         System.out.println("Enter id for change: ");
         Integer id = scan.nextInt();
         List<Label> labelList = selectLabels();
-
         controller.updatePost(id, text, labelList);
 
     }
@@ -47,12 +43,13 @@ public class PostView {
         System.out.println("Enter ID");
         while (true) {
             Integer choice = scan.nextInt();
-            if(choice == -1){
-                return result;}
-    Label currentLabel = labelList.stream().filter(label -> label.getId().equals(choice)).findFirst().orElse(null);
+            if (choice == -1) {
+                return result;
+            }
+            Label currentLabel = labelList.stream().filter(label -> label.getId().equals(choice)).findFirst().orElse(null);
         }
 
-        }
     }
+}
 
 
