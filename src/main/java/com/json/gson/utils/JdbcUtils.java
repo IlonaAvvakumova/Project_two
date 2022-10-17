@@ -4,7 +4,7 @@ import java.sql.*;
 
 public class JdbcUtils {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DATABASE_URL = "jdbc:mysql://localhost/labels?useSSL=false";
+    static final String DATABASE_URL = "jdbc:mysql://localhost/writers?useSSL=false";
 
 
     static final String USER = "root";

@@ -16,20 +16,15 @@
 
 
     <changeSet id="create_table2" author="Ilona">
-        <createTable tableName="post_labels">
 
-            <column name="post_id" type="int"/>
-            <column name="label_id" type="int"/>
-
-        </createTable>
         <createTable tableName="posts">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="content" type="varchar(50)"/>
-            <column name="writer_id" type="int">
+            <!--<column name="writer_id" type="int">
                 <constraints nullable="false" foreignKeyName="fk_post_writer" references="writers(id)"/>
-            </column>
+            </column>-->
         </createTable>
 
     </changeSet>
@@ -38,8 +33,13 @@
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="firstName" type="varchar(50)"/>
-            <column name="lastName" type="varchar(50)"/>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+
+        </createTable>
+
+        <createTable tableName="post_labels">
+
             <column name="post_id" type="int">
                 <constraints nullable="false" foreignKeyName="fk_post_writer" references="posts(id)"/>
             </column>
@@ -49,7 +49,30 @@
         </createTable>
     </changeSet>
     <!--     labels -->
-    <!--     posts  === writer_id FK  -->
-    <!--     post_labels (post_id + label_id) FK -->
+    <!--     posts  === writer_id FK  ++++-->
+    <!--     post_labels (post_id + label_id) FK +++-->
     <!--     writers (post_id + label_id) FK -->
+    <changeSet id="create_key" author="Ilona">
+
+        <addColumn tableName="posts">
+            <column name="writer_id" type="int">
+                <constraints nullable="false" foreignKeyName="fk_writer_posts" references="writers(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="create_key2" author="Ilona">
+        <addColumn tableName="writers">
+            <column name="post_id_w" type="int">
+                <constraints  foreignKeyName="fk_posts_writer" references="posts(id)"/>
+            </column>
+        </addColumn>
+        <addColumn tableName="writers">
+            <column name="label_id" type="int">
+                <constraints  foreignKeyName="fk_writer_label" references="labels(id)"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+
 </databaseChangeLog>
