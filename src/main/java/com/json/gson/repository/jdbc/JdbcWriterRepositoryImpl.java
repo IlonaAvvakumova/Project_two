@@ -13,7 +13,7 @@ import java.util.List;
 public class JdbcWriterRepositoryImpl implements WriterRepository {
     private final String GET_ALL_LABELS = "SELECT * FROM writers";
     private final String UPDATE_ALL_LABELS = "UPDATE writers SET first_name = 'Igor' where id = 1;";
-    private final String CREATE_ALL_LABELS = " insert into writers (first_name, last_name) values ('Ivan','Morozov');";
+   // private final String CREATE_ALL_LABELS = " insert into writers (first_name, last_name) values ('Ivan','Morozov');";
     private final String DELETE_ALL_LABELS = " DELETE FROM writers where id = 1;";
     List<Writer> writers = new ArrayList<>();
 
@@ -46,7 +46,10 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public Writer create(Writer writer) {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(CREATE_ALL_LABELS)) {
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(
+                "insert into writers (first_name, last_name) values ('"+ writer.getFirstName() + "','"
+                        + writer.getLastName()+"');"
+        )) {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

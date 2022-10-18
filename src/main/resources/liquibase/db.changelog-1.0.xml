@@ -48,10 +48,20 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="add_columns"  author="Ilona">
+        <addColumn tableName="posts">
+            <column name="updated" type="BIGINT"></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="add_columns2"  author="Ilona">
+        <addColumn tableName="posts">
+            <column name="created" type="BIGINT"></column>
+        </addColumn>
+    </changeSet>
     <!--     labels -->
     <!--     posts  === writer_id FK  ++++-->
     <!--     post_labels (post_id + label_id) FK +++-->
-    <!--     writers (post_id + label_id) FK -->
+    <!--     writers () FK -->
     <changeSet id="create_key" author="Ilona">
 
         <addColumn tableName="posts">
@@ -61,18 +71,5 @@
         </addColumn>
     </changeSet>
 
-    <changeSet id="create_key2" author="Ilona">
-        <addColumn tableName="writers">
-            <column name="post_id_w" type="int">
-                <constraints  foreignKeyName="fk_posts_writer" references="posts(id)"/>
-            </column>
-        </addColumn>
-        <addColumn tableName="writers">
-            <column name="label_id" type="int">
-                <constraints  foreignKeyName="fk_writer_label" references="labels(id)"/>
-            </column>
-        </addColumn>
-
-    </changeSet>
 
 </databaseChangeLog>
