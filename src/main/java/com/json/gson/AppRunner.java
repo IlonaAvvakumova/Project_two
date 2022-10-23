@@ -1,37 +1,31 @@
 package com.json.gson;
 
-import com.json.gson.model.Post;
-import com.json.gson.model.Writer;
-import com.json.gson.repository.jdbc.JdbcLabelRepositoryImpl;
-import com.json.gson.model.Label;
-import com.json.gson.repository.jdbc.JdbcPostRepositoryImpl;
-import com.json.gson.repository.jdbc.JdbcWriterRepositoryImpl;
-import com.json.gson.view.MainView;
 
-import java.util.List;
-import java.util.Scanner;
+import com.json.gson.repository.jdbc.JdbcLabelRepositoryImpl;
+import com.json.gson.service.LabelService;
+import com.json.gson.view.MainView;
 
 public class AppRunner {
     public static void main(String[] args) {
-/*
-        JdbcLabelRepositoryImpl jdbcLabelRepository = new JdbcLabelRepositoryImpl();
-        // List<Label> lll = jdbcLabelRepository.getAll();
-        Label jhgj = new Label();
-        Label l = jdbcLabelRepository.getById(3);
-        System.out.println(l);*/
-      /*  MainView mainView = new MainView();
-        mainView.menu();*/
 
-       /* JdbcPostRepositoryImpl jdbcLabelRepository = new JdbcPostRepositoryImpl();
-        // List<Label> lll = jdbcLabelRepository.getAll();
-        Post jhgj = new Post();
-        jdbcLabelRepository.deleteById(1);*/
-     /*   JdbcWriterRepositoryImpl jdbcLabelRepository = new JdbcWriterRepositoryImpl();
+      //  MainView menu = new MainView();
+      //  menu.menu();
 
-        Writer jhgj = new Writer();
-        jhgj.setFirstName("Егор");
-        jhgj.setLastName("Попов");
-        jdbcLabelRepository.create(jhgj);*/
-
+        JdbcLabelRepositoryImpl jdb = new JdbcLabelRepositoryImpl();
+        System.out.println(jdb.getAll());
+/* "Создать новый массив размера 100 и заполнить его случайными числами из диапазона от 0 до 10000.
+Затем, используя цикл for each вывести в консоль:
+наибольший элемент массива"*/
+/*int [] massiv = new int[100];
+        for (int i = 0; i < 100; i++) {
+            massiv [i]= (int) (Math.random()*10001);
+        }
+        int max =0;
+        for (int a:massiv
+             ) {
+            if(a>max)
+                max  = a;
+        }
+        System.out.println(max);*/
     }
 }

@@ -7,46 +7,74 @@ import com.json.gson.utils.JdbcUtils;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JdbcLabelRepositoryImpl implements LabelRepository {
     private final String GET_ALL_LABELS = "SELECT * FROM labels";
-    private final String UPDATE_ALL_LABELS = "UPDATE labels SET name = 'Igor' where id = 3;";
-    private final String CREATE_ALL_LABELS = " insert into labels (name) values (\"Morozov\");";
-    private final String DELETE_ALL_LABELS = " DELETE FROM labels where id = 4;";
+    private final String GET_LABEL_BY_ID = "SELECT * FROM labels WHERE id = %d";
+    private final String UPDATE_LABEL = "UPDATE labels SET name = %s where id = %d;";
+    private final String CREATE_LABEL = "INSERT INTO labels (name) VALUES ('%s');";
+    private final String DELETE_LABEL = " DELETE FROM labels where id = %d;";
     private List<Label> labels = new ArrayList<>();
 
-    @Override
-    public List<Label> getAll() {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_ALL_LABELS)) {
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
+    private Label convertFromResult(ResultSet resultSet) {
+        if (resultSet != null) {
+            try {
                 Label l = new Label();
                 l.setId(resultSet.getInt("id"));
                 l.setName(resultSet.getString("name"));
-                labels.add(l);
+                return l;
+            } catch (SQLException throwables) {
+                System.out.println("Error occurred: " + throwables.getMessage());
+                return null;
             }
-            preparedStatement.close();
-            resultSet.close();
-            return labels;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        } else System.out.println("Нет данных для ввода");
         return null;
     }
 
     @Override
-    public Label getById(Integer integer) {
-        getAll();
-        return labels.stream().filter(a -> a.getId().equals(integer)).findFirst().orElse(null);
+    public List<Label> getAll() {
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_ALL_LABELS);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<Label> result = new ArrayList<>();
+            while (resultSet.next()) {
+                result.add(convertFromResult(resultSet));
+            }
+            return result;
+        } catch (SQLException throwables) {
+            System.out.println("Error occurred: " + throwables.getMessage());
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public Label getById(Integer id) {
+        String sql = String.format(GET_LABEL_BY_ID, id);
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(sql);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            return (convertFromResult(resultSet));
+        } catch (SQLException throwables) {
+            System.out.println("Error occurred: " + throwables.getMessage());
+            return null;
+        }
     }
 
     @Override
     public Label create(Label label) {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(CREATE_ALL_LABELS)) {
-            preparedStatement.executeUpdate();
+        String sql = String.format(CREATE_LABEL, label.getName());
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(sql)) {
+          preparedStatement.executeUpdate();
+                 ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    label.setId(generatedKeys.getInt(1));
+                }
+                else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -55,8 +83,10 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
 
     @Override
     public Label update(Label label) {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(UPDATE_ALL_LABELS)) {
+        String sql = String.format(UPDATE_LABEL, label.getName());
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(sql)) {
             preparedStatement.executeUpdate();
+            label.setId(Statement.RETURN_GENERATED_KEYS); //?????
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -65,7 +95,7 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
 
     @Override
     public void deleteById(Integer id) {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_ALL_LABELS)) {
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_LABEL)) {
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

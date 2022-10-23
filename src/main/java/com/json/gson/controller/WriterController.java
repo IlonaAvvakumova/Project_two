@@ -22,7 +22,7 @@ public class WriterController {
         writer.setId(id);
         writer.setFirstName(text1);
         writer.setLastName(text2);
-        writer.setWriters(list);
+        writer.setPosts(list);
 
         writerService.update(writer);
         return writer;

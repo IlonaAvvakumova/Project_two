@@ -21,7 +21,7 @@ public class JdbcUtils {
     public static PreparedStatement createStatement(String sql) throws SQLException {
         try {
            connection = JdbcUtils.getConnection();
-            return connection.prepareStatement(sql);
+            return connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             return null;

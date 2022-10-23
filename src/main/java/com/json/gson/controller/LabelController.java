@@ -13,7 +13,7 @@ public class LabelController {
         return  labelService.getAllLab();
     }
     public Label createLabel(String name){
-        Label label = new Label();
+        Label label = new Label();// создается сущность для передачи в БД
         label.setName(name);
         return labelService.createLabel(label);
     }

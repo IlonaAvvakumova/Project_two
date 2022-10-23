@@ -6,7 +6,7 @@ public class Writer {
     private Integer id;
     private String firstName;
     private String lastName;
-    private List<Post> writers;
+    private List<Post> posts;
 
     public Integer getId() {
         return id;
@@ -32,12 +32,12 @@ public class Writer {
         this.lastName = lastName;
     }
 
-    public List<Post> getWriters() {
-        return writers;
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setWriters(List<Post> writers) {
-        this.writers = writers;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Writer {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", writerList=" + writers +
+                ", postsList=" + posts +
                 '}';
     }
 }
