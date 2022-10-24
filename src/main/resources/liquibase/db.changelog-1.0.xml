@@ -5,7 +5,16 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
 
-    <changeSet id="create_table" author="Ilona">
+    <changeSet id="create-writers-table" author="ilona">
+        <createTable tableName="writers">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="first_name" type="varchar(50)"/>
+            <column name="last_name" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="create-labels-table" author="ilona">
         <createTable tableName="labels">
             <column name="id" type="INT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -13,63 +22,29 @@
             <column name="name" type="varchar(31)"/>
         </createTable>
     </changeSet>
-
-
-    <changeSet id="create_table2" author="Ilona">
-
+    <changeSet id="create-posts-table" author="ilona">
         <createTable tableName="posts">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="content" type="varchar(50)"/>
-            <!--<column name="writer_id" type="int">
+            <column name="created" type="BIGINT"/>
+            <column name="updated" type="BIGINT"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="writer_id" type="INT">
                 <constraints nullable="false" foreignKeyName="fk_post_writer" references="writers(id)"/>
-            </column>-->
-        </createTable>
-
-    </changeSet>
-    <changeSet id="create_table3" author="Ilona">
-        <createTable tableName="writers">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="first_name" type="varchar(50)"/>
-            <column name="last_name" type="varchar(50)"/>
-
         </createTable>
-
+    </changeSet>
+    <changeSet id="create-post-labels-table" author="ilona">
         <createTable tableName="post_labels">
-
-            <column name="post_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_post_writer" references="posts(id)"/>
+            <column name="post_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_post_labels_posts" references="posts(id)"/>
             </column>
-            <column name="label_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_label_writer" references="labels(id)"/>
+            <column name="label_id" type="INT">
+                <constraints nullable="false" foreignKeyName="fk_post_labels_labels" references="labels(id)"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="add_columns"  author="Ilona">
-        <addColumn tableName="posts">
-            <column name="updated" type="BIGINT"></column>
-        </addColumn>
-    </changeSet>
-    <changeSet id="add_columns2"  author="Ilona">
-        <addColumn tableName="posts">
-            <column name="created" type="BIGINT"></column>
-        </addColumn>
-    </changeSet>
-    <!--     labels -->
-    <!--     posts  === writer_id FK  ++++-->
-    <!--     post_labels (post_id + label_id) FK +++-->
-    <!--     writers () FK -->
-    <changeSet id="create_key" author="Ilona">
-
-        <addColumn tableName="posts">
-            <column name="writer_id" type="int">
-                <constraints nullable="false" foreignKeyName="fk_writer_posts" references="writers(id)"/>
-            </column>
-        </addColumn>
-    </changeSet>
-
 
 </databaseChangeLog>

@@ -17,11 +17,11 @@ public class LabelController {
         label.setName(name);
         return labelService.createLabel(label);
     }
-    public void updateLabel(Integer id, String name){
+    public Label updateLabel(Integer id, String name){
         Label label = new Label();
         label.setId(id);
         label.setName(name);
-        labelService.updateLabel(label);
+       return labelService.updateLabel(label);
     }
     public void deleteLabel(Integer id){
         labelService.deleteLabel(id);

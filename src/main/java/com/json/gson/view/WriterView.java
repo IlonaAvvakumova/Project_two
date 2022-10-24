@@ -29,12 +29,20 @@ public class WriterView {
         System.out.println("Enter id for change: ");
         Integer id = scan.nextInt();
         List<Post> list = postController.getAll();
-        controller.updateWriter(id, next1, next2, list);
+       Writer writer = controller.updateWriter(id, next1, next2, list);
+        System.out.println("Update writer, new writer: " + writer);
     }
 
     public void deleteWriterView() {
         System.out.println("Which id needs delete: ");
         Integer id = scan.nextInt();
         controller.deleteWriter(id);
+
+        System.out.println("Удаление прошло успешно");
+    }
+    public void getAll(){
+        System.out.println("Все writers:\n");
+        List<Writer> writerList =  controller.getAll();
+        System.out.println(writerList);
     }
 }

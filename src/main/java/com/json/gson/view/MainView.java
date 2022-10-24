@@ -12,7 +12,7 @@ public class MainView {
     public void menu(){
         System.out.println("Напиши название таблицы: Label, Post или Writer");
         String s = scan.nextLine();
-        System.out.println("Выберете операцию: Создать, Обновить, Удалить");
+        System.out.println("Выберете операцию: Создать, Обновить, Удалить, Показать все");
         if (s.equals("Label")){
             mainMenuLabel();
         }else if (s.equals("Post")){
@@ -37,7 +37,8 @@ switch (input) {
     case "Удалить":
         labelView.deleteLabelView();
         break;
-
+    case"Показать все":
+        labelView.getAll();
 }
    }
     public void mainMenuPost(){
@@ -52,7 +53,8 @@ switch (input) {
             case "Удалить":
                 postView.deletePostView();
                 break;
-
+            case"Показать все":
+                postView.getAll();
         }
     }
     public void mainMenuWriter(){
@@ -67,7 +69,8 @@ switch (input) {
             case "Удалить":
                 writerView.deleteWriterView();
                 break;
-
+            case"Показать все":
+                writerView.getAll();
 
         }
     }

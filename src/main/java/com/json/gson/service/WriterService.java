@@ -4,6 +4,8 @@ import com.json.gson.model.Writer;
 import com.json.gson.repository.WriterRepository;
 import com.json.gson.repository.jdbc.JdbcWriterRepositoryImpl;
 
+import java.util.List;
+
 public class WriterService {
     private final WriterRepository writerRepository;
 
@@ -25,5 +27,8 @@ public class WriterService {
 
     public void delete(Integer id) {
         writerRepository.deleteById(id);
+    }
+    public List<Writer> getAll( ) {
+      return   writerRepository.getAll();
     }
 }

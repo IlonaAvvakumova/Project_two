@@ -2,17 +2,20 @@ package com.json.gson;
 
 
 import com.json.gson.repository.jdbc.JdbcLabelRepositoryImpl;
+import com.json.gson.repository.jdbc.JdbcPostRepositoryImpl;
+import com.json.gson.repository.jdbc.JdbcWriterRepositoryImpl;
 import com.json.gson.service.LabelService;
 import com.json.gson.view.MainView;
 
 public class AppRunner {
     public static void main(String[] args) {
 
-      //  MainView menu = new MainView();
-      //  menu.menu();
+       MainView menu = new MainView();
+       menu.menu();
 
-        JdbcLabelRepositoryImpl jdb = new JdbcLabelRepositoryImpl();
-        System.out.println(jdb.getAll());
+     // JdbcWriterRepositoryImpl jdb = new JdbcWriterRepositoryImpl();
+     //  System.out.println(jdb.getAll());
+
 /* "Создать новый массив размера 100 и заполнить его случайными числами из диапазона от 0 до 10000.
 Затем, используя цикл for each вывести в консоль:
 наибольший элемент массива"*/

@@ -17,7 +17,6 @@ public class LabelService {
     }
 
     public Label createLabel(Label label) {
-        System.out.println("Попытка создания параметров Label (я сервисный слой)");
         return labelRepository.create(label);
     }
 
