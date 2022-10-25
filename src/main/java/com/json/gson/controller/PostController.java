@@ -11,6 +11,7 @@ public class PostController {
     public Post createPost(String text) {
         Post post = new Post();
         post.setContent(text);
+
         postService.create(post);
         return post;
     }
@@ -30,6 +31,9 @@ public class PostController {
 
     public List<Post> getAll() {
         return postService.getAll();
+    }
+    public Post getById(Integer id){
+        return  postService.getById(id);
     }
 }
 

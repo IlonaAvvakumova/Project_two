@@ -55,6 +55,12 @@ public class PostView {
         List<Post> postsList =  controller.getAll();
         System.out.println(postsList);
     }
+    public void getById(){
+        System.out.println("Which id needs show");
+        Integer id = scan.nextInt();
+       Post post = controller.getById(id);
+        System.out.println(post);
+    }
 }
 
 

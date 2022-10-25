@@ -27,7 +27,8 @@ public class LabelController {
         labelService.deleteLabel(id);
     }
 
-    public Label getLabelById(Integer id){
+    public Label getById(Integer id){
         return labelService.getLabel(id);
     }
+
 }

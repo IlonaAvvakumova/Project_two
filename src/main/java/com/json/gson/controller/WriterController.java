@@ -17,7 +17,7 @@ public class WriterController {
         return writer;
     }
 
-    public Writer updateWriter(Integer id, String text1,String text2, List<Post>list) {
+    public Writer updateWriter(Integer id, String text1, String text2, List<Post> list) {
         Writer writer = new Writer();
         writer.setId(id);
         writer.setFirstName(text1);
@@ -31,8 +31,12 @@ public class WriterController {
     public void deleteWriter(Integer id) {
         writerService.delete(id);
     }
-    public List<Writer> getAll(){
-      return   writerService.getAll();
+
+    public List<Writer> getAll() {
+        return writerService.getAll();
     }
 
+    public Writer getById(Integer id) {
+        return writerService.getById(id);
+    }
 }

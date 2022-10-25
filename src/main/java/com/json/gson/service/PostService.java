@@ -31,4 +31,7 @@ public class PostService {
     public List<Post> getAll() {
         return postRepository.getAll();
     }
+    public Post getById(Integer id){
+        return postRepository.getById(id);
+    }
 }

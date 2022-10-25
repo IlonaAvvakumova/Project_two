@@ -26,9 +26,12 @@ public class WriterService {
     }
 
     public void delete(Integer id) {
-        writerRepository.deleteById(id);
+         writerRepository.deleteById(id);
     }
     public List<Writer> getAll( ) {
       return   writerRepository.getAll();
+    }
+    public Writer getById(Integer id){
+        return writerRepository.getById(id);
     }
 }

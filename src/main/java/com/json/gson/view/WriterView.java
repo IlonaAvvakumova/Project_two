@@ -45,4 +45,10 @@ public class WriterView {
         List<Writer> writerList =  controller.getAll();
         System.out.println(writerList);
     }
+    public void getById(){
+        System.out.println("Which id needs show");
+        Integer id = scan.nextInt();
+        Writer writer = controller.getById(id);
+        System.out.println(writer);
+    }
 }

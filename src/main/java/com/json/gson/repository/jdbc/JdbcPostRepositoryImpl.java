@@ -2,6 +2,7 @@ package com.json.gson.repository.jdbc;
 
 import com.json.gson.model.Label;
 import com.json.gson.model.Post;
+import com.json.gson.model.Writer;
 import com.json.gson.repository.PostRepository;
 import com.json.gson.utils.JdbcUtils;
 
@@ -15,7 +16,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
     private final String GET_ALL_POSTS = "SELECT * FROM posts";
     private final String GET_POST_BY_ID = "SELECT * FROM posts WHERE id = %d";
     private final String UPDATE_POST = "UPDATE posts SET content = ('%s') where id = %d;";
-    private final String CREATE_POST = "INSERT INTO posts (content, writer_id) values ('%s', 2);";
+    private final String CREATE_POST = "INSERT INTO posts (content) values ('%s');";
     private final String DELETE_POST = " DELETE FROM posts where id = %d;";
 
 
@@ -65,7 +66,8 @@ public class JdbcPostRepositoryImpl implements PostRepository {
 
     @Override
     public Post create(Post post) {
-        String sql = String.format(CREATE_POST, post.getContent());
+
+        String sql = String.format(CREATE_POST, post.getContent()) ;
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(sql)) {
             preparedStatement.executeUpdate();
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();

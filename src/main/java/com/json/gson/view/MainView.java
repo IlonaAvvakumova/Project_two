@@ -9,39 +9,43 @@ public class MainView {
     private final WriterView writerView = new WriterView();
     private final Scanner scan = new Scanner(System.in);
 
-    public void menu(){
+    public void menu() {
         System.out.println("Напиши название таблицы: Label, Post или Writer");
         String s = scan.nextLine();
-        System.out.println("Выберете операцию: Создать, Обновить, Удалить, Показать все");
-        if (s.equals("Label")){
+        System.out.println("Выберете операцию: Создать, Обновить, Удалить, Показать все, По ид");
+        if (s.equals("Label")) {
             mainMenuLabel();
-        }else if (s.equals("Post")){
+        } else if (s.equals("Post")) {
             mainMenuPost();
-        }else if(s.equals("Writer")){
+        } else if (s.equals("Writer")) {
             mainMenuWriter();
-        }else{
+        } else {
             System.out.println("Вы ввели не корректное значение");
             menu();
         }
 
     }
-   public void mainMenuLabel(){
-String input = scan.nextLine();
-switch (input) {
-    case "Создать":
-        labelView.createLabelView();
-        break;
-    case "Обновить":
-        labelView.updateLabelView();
-        break;
-    case "Удалить":
-        labelView.deleteLabelView();
-        break;
-    case"Показать все":
-        labelView.getAll();
-}
-   }
-    public void mainMenuPost(){
+
+    public void mainMenuLabel() {
+        String input = scan.nextLine();
+        switch (input) {
+            case "Создать":
+                labelView.createLabelView();
+                break;
+            case "Обновить":
+                labelView.updateLabelView();
+                break;
+            case "Удалить":
+                labelView.deleteLabelView();
+                break;
+            case "Показать все":
+                labelView.getAll();
+            case "По ид":
+                labelView.getById();
+        }
+    }
+
+    public void mainMenuPost() {
         String input = scan.nextLine();
         switch (input) {
             case "Создать":
@@ -53,11 +57,14 @@ switch (input) {
             case "Удалить":
                 postView.deletePostView();
                 break;
-            case"Показать все":
+            case "Показать все":
                 postView.getAll();
+            case "По ид":
+                postView.getById();
         }
     }
-    public void mainMenuWriter(){
+
+    public void mainMenuWriter() {
         String input = scan.nextLine();
         switch (input) {
             case "Создать":
@@ -69,9 +76,10 @@ switch (input) {
             case "Удалить":
                 writerView.deleteWriterView();
                 break;
-            case"Показать все":
+            case "Показать все":
                 writerView.getAll();
-
+            case "По ид":
+                writerView.getById();
         }
     }
 }
