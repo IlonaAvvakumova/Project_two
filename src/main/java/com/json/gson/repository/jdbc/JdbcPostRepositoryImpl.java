@@ -16,7 +16,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
     private final String GET_ALL_POSTS = "SELECT * FROM posts";
     private final String GET_POST_BY_ID = "SELECT * FROM posts WHERE id = %d";
     private final String UPDATE_POST = "UPDATE posts SET content = ('%s') where id = %d;";
-    private final String CREATE_POST = "INSERT INTO posts (content) values ('%s');";
+    private final String CREATE_POST = "INSERT INTO posts (content, writer_id) values ('%s',2);";
     private final String DELETE_POST = " DELETE FROM posts where id = %d;";
 
 

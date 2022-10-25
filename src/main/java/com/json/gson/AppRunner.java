@@ -1,10 +1,4 @@
 package com.json.gson;
-
-
-import com.json.gson.repository.jdbc.JdbcLabelRepositoryImpl;
-import com.json.gson.repository.jdbc.JdbcPostRepositoryImpl;
-import com.json.gson.repository.jdbc.JdbcWriterRepositoryImpl;
-import com.json.gson.service.LabelService;
 import com.json.gson.view.MainView;
 
 public class AppRunner {
