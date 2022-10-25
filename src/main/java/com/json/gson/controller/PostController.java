@@ -2,16 +2,18 @@ package com.json.gson.controller;
 
 import com.json.gson.model.Label;
 import com.json.gson.model.Post;
+import com.json.gson.model.Writer;
 import com.json.gson.service.PostService;
 import java.util.List;
 
 public class PostController {
     private final PostService postService = new PostService();
 
-    public Post createPost(String text) {
+    public Post createPost(String text, List<Label> labels, Writer writer) {
         Post post = new Post();
         post.setContent(text);
-
+        post.setLabels(labels);
+        post.setWriter(writer);
         postService.create(post);
         return post;
     }

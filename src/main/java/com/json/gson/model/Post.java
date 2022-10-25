@@ -10,6 +10,15 @@ public class Post {
     private long created;
     private PostStatus status;
     private List<Label> labels;
+private Writer writer;
+
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
+    }
 
     public PostStatus getStatus() {
         return status;
@@ -66,8 +75,9 @@ public class Post {
                 ", content='" + content + '\'' +
                 ", updated=" + updated +
                 ", created=" + created +
-
-                ", listLab=" + labels +
+                ", status=" + status +
+                ", labels=" + labels +
+                ", writer=" + writer +
                 '}';
     }
 }
