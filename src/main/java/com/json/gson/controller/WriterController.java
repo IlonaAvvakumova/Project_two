@@ -29,7 +29,7 @@ public class WriterController {
     }
 
     public void deleteWriter(Integer id) {
-        writerService.delete(id);
+      writerService.delete(id);
     }
 
     public List<Writer> getAll() {

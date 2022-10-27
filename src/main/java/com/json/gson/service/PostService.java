@@ -1,6 +1,7 @@
 package com.json.gson.service;
 
 import com.json.gson.model.Post;
+import com.json.gson.model.PostStatus;
 import com.json.gson.repository.PostRepository;
 import com.json.gson.repository.jdbc.JdbcPostRepositoryImpl;
 import java.util.List;
@@ -17,15 +18,18 @@ public class PostService {
     }
 
     public Post create(Post post) {
+        post.setStatus(PostStatus.ACTIVE);
         return postRepository.create(post);
     }
 
     public Post update(Post post) {
+        post.setStatus(PostStatus.UNDER_REVIEW);
         return postRepository.update(post);
     }
 
-    public void delete(Integer id) {
-        postRepository.deleteById(id);
+    public Post delete(Integer id, Post post) {
+        post.setStatus(PostStatus.DELETED);
+       return postRepository.deleteById(id, post);
     }
 
     public List<Post> getAll() {

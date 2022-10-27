@@ -22,7 +22,7 @@ public class PostView {
         String next = scan.nextLine();
         Writer writer = selectWriter();
         List<Label> labels = selectLabels();
-        Post post = controller.createPost(next, labels, writer);
+        Post post = controller.createPost(next, labels,  writer);
         System.out.println("Created Post: " + post);
     }
 
@@ -31,11 +31,11 @@ public class PostView {
         List<Writer> writers = writerController.getAll();
         System.out.println(writers);
         System.out.println("Выберите id писателя");
-        Integer writer_id = scan.nextInt();
+        Integer writerId = scan.nextInt();
         Writer writer = new Writer();
         for (Writer w : writers
         ) {
-            if (w.getId() == writer_id) {
+            if (w.getId().equals(writerId) ) {
                 writer = w;
             }
         }
@@ -69,11 +69,14 @@ public class PostView {
 
     }
 
-    public void deletePostView() {
+    public Post deletePostView() {
         System.out.println("Which id needs delete: ");
+        Post post = new Post();
         Integer id = scan.nextInt();
-        controller.deletePost(id);
+        post.setId(id);
         System.out.println("Удаление прошло успешно");
+       return controller.deletePost(id, post);
+
     }
 
     public void getAll() {

@@ -9,7 +9,7 @@ import java.util.List;
 public class WriterService {
     private final WriterRepository writerRepository;
 
-    public WriterService(){
+    public WriterService() {
         this.writerRepository = new JdbcWriterRepositoryImpl();
     }
 
@@ -26,12 +26,15 @@ public class WriterService {
     }
 
     public void delete(Integer id) {
-         writerRepository.deleteById(id);
+        Writer w = new Writer();
+        writerRepository.deleteById(id, w);
     }
-    public List<Writer> getAll( ) {
-      return   writerRepository.getAll();
+
+    public List<Writer> getAll() {
+        return writerRepository.getAll();
     }
-    public Writer getById(Integer id){
+
+    public Writer getById(Integer id) {
         return writerRepository.getById(id);
     }
 }

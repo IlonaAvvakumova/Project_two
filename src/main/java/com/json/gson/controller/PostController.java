@@ -27,8 +27,8 @@ public class PostController {
         return post;
     }
 
-    public void deletePost(Integer id) {
-        postService.delete(id);
+    public Post deletePost(Integer id, Post post) {
+        return postService.delete(id, post);
     }
 
     public List<Post> getAll() {

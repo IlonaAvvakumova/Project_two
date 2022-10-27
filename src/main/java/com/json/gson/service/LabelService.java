@@ -25,7 +25,8 @@ public class LabelService {
     }
 
     public void deleteLabel(Integer id) {
-        labelRepository.deleteById(id);
+        Label l = new Label();
+        labelRepository.deleteById(id, l);
     }
 
     public Label getLabel(Integer id) {

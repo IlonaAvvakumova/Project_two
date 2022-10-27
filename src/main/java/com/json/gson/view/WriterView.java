@@ -36,9 +36,9 @@ public class WriterView {
     public void deleteWriterView() {
         System.out.println("Which id needs delete: ");
         Integer id = scan.nextInt();
-        controller.deleteWriter(id);
-
+       controller.deleteWriter(id);
         System.out.println("Удаление прошло успешно");
+
     }
     public void getAll(){
         System.out.println("Все writers:\n");

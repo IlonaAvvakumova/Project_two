@@ -10,7 +10,7 @@ public class Post {
     private long created;
     private PostStatus status;
     private List<Label> labels;
-private Writer writer;
+    private Writer writer;
 
     public Writer getWriter() {
         return writer;
