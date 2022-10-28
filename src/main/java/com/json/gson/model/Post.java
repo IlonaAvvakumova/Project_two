@@ -11,6 +11,43 @@ public class Post {
     private PostStatus status;
     private List<Label> labels;
     private Writer writer;
+    private Integer writerID ;
+    private Integer postId ;
+    private Integer labelId;
+    private String nameLabel;
+
+
+    public Integer getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Integer postId) {
+        this.postId = postId;
+    }
+
+    public Integer getLabelId() {
+        return labelId;
+    }
+
+    public void setLabelId(Integer labelId) {
+        this.labelId = labelId;
+    }
+
+    public String getNameLabel() {
+        return nameLabel;
+    }
+
+    public void setNameLabel(String nameLabel) {
+        this.nameLabel = nameLabel;
+    }
+
+    public Integer getWriterID() {
+        return writerID;
+    }
+
+    public void setWriterID(Integer writerID) {
+        this.writerID = writerID;
+    }
 
     public Writer getWriter() {
         return writer;
@@ -76,8 +113,11 @@ public class Post {
                 ", updated=" + updated +
                 ", created=" + created +
                 ", status=" + status +
-                ", labels=" + labels +
-                ", writer=" + writer +
+
+                ", writerID=" + writerID +
+                ", postId=" + postId +
+                ", labelId=" + labelId +
+                ", nameLabel='" + nameLabel + '\'' +
                 '}';
     }
 }
