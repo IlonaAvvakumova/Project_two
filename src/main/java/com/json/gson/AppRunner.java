@@ -5,10 +5,10 @@ import com.json.gson.view.MainView;
 public class AppRunner {
     public static void main(String[] args) {
 
-      // MainView menu = new MainView();
-     // menu.menu();
-        JdbcPostRepositoryImpl ttt = new JdbcPostRepositoryImpl();
-        System.out.println( ttt.getAllj());
+      MainView menu = new MainView();
+      menu.menu();
+     /*   JdbcPostRepositoryImpl ttt = new JdbcPostRepositoryImpl();
+        System.out.println( ttt.getAll());*/
 
     }
 }

@@ -34,7 +34,10 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             "WHERE p.id = ?;";
     private final String GET = "Select id from posts; ";
     private final String UPDATE_POST = "UPDATE posts SET content= (?), updated=?,  status=? where id = ?;";
+    private final String UPDATE_POST_LABEL = "UPDATE post_labels SET label_id= (?) where post_id = ?;";
     private final String CREATE_POST = "INSERT INTO posts (content,created, updated, status, writer_id) VALUES (?,?,?,?,?);";
+    private final String CREATE_POST_LABEL = "INSERT INTO post_labels (post_id, label_id) VALUES (?,?);";
+    private final String DELETE_POST = "UPDATE posts SET status= (?) where id = ?;";
 
     private Post convertFromResult(ResultSet resultSet) {
         if (resultSet != null) {
@@ -95,7 +98,6 @@ public class JdbcPostRepositoryImpl implements PostRepository {
 
         if (resultSet != null) {
             try {
-
                 if(posts.containsKey(resultSet.getInt("id")))
                 {
                     Post p = posts.get(resultSet.getInt("id"));
@@ -128,7 +130,6 @@ public class JdbcPostRepositoryImpl implements PostRepository {
 
                     labelMap.put(l.getId(),l.getName());
                     p.setMapLab(labelMap);
-
                     return p;
                 }
 
@@ -201,6 +202,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             preparedStatement.setString(4, post.getStatus().name());
             preparedStatement.setInt(5, post.getWriter().getId());
             preparedStatement.executeUpdate();
+
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 post.setId(generatedKeys.getInt(1));
@@ -208,7 +210,8 @@ public class JdbcPostRepositoryImpl implements PostRepository {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
 
-           /* for (Label l : post.getLabels()
+
+           for (Label l : post.getLabels()
             ) {
                 try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(CREATE_POST_LABEL)) {
 
@@ -218,7 +221,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-            }*/
+            }
 
             post.setCreated(time);
             post.setUpdated(time);
@@ -234,37 +237,40 @@ public class JdbcPostRepositoryImpl implements PostRepository {
 
     @Override
     public Post update(Post post) {
+        long time = LocalDateTime.now().getNano() * 1000L;
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(UPDATE_POST)) {
-            long time = LocalDateTime.now().getNano() * 1000L;
+
             preparedStatement.setString(1, post.getContent());
             preparedStatement.setLong(2, time);
             preparedStatement.setString(3, post.getStatus().name());
             preparedStatement.setInt(4, post.getId());
             preparedStatement.executeUpdate();
-            post.setUpdated(time);
-            post.setLabels(post.getLabels());
-            post.setWriter(post.getWriter());
+            for (Label l : post.getLabels()) {
+                try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(UPDATE_POST_LABEL)) {
+
+                    preparedStatementGetID.setInt(1, l.getId());
+                    preparedStatementGetID.setInt(2, post.getId());
+
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-      /*  for (Label l : post.getLabels()) {
-            try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(UPDATE_POST_LABEL)) {
-                preparedStatementGetID.setInt(1, l.getId());
-                preparedStatementGetID.setInt(2, post.getId());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-        }*/
-
 
         try (PreparedStatement preparedStatement2 = JdbcUtils.createStatement("SELECT * FROM posts WHERE id = " + post.getId() + " ;");
              ResultSet resultSet = preparedStatement2.executeQuery()) {
             while (resultSet.next()) {
                 post.setCreated(resultSet.getLong("created"));
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        post.setUpdated(time);
+        post.setLabels(post.getLabels());
+
         return post;
     }
 
@@ -273,13 +279,13 @@ public class JdbcPostRepositoryImpl implements PostRepository {
         Post p = new Post();
         p.setStatus(PostStatus.DELETED);
 
-      /*  try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_POST)) {
+      try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_POST)) {
 
             preparedStatement.setInt(2, id);
             preparedStatement.setString(1, p.getStatus().name());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }*/
+        }
     }
 }

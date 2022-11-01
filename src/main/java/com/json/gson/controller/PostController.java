@@ -12,7 +12,7 @@ public class PostController {
     public Post createPost(String text, List<Label> labels, Writer writer) {
         Post post = new Post();
         post.setContent(text);
-       // post.setLabels(labels);
+        post.setLabels(labels);
         post.setWriter(writer);
         postService.create(post);
         return post;
@@ -22,7 +22,7 @@ public class PostController {
         Post post = new Post();
         post.setId(id);
         post.setContent(text);
-      //  post.setLabels(labelList);
+       post.setLabels(labelList);
         postService.update(post);
         return post;
     }
