@@ -69,13 +69,13 @@ public class PostView {
 
     }
 
-    public Post deletePostView() {
+    public void deletePostView() {
         System.out.println("Which id needs delete: ");
         Post post = new Post();
         Integer id = scan.nextInt();
         post.setId(id);
         System.out.println("Удаление прошло успешно");
-       return controller.deletePost(id, post);
+       controller.deletePost(id);
 
     }
 

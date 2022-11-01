@@ -4,10 +4,7 @@ import com.json.gson.model.Writer;
 import com.json.gson.repository.WriterRepository;
 import com.json.gson.utils.JdbcUtils;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,7 +99,7 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
     }
 
     @Override
-    public Writer deleteById(Integer id, Writer writer) {
+    public void deleteById(Integer id) {
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_WRITER)) {
             preparedStatement.setInt(1,id);
@@ -110,12 +107,12 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println("Нельзя удалить, используется как внешний ключ");
-            return null;
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
 
-            return null;
+
         }
-        return writer;
+
     }
 }

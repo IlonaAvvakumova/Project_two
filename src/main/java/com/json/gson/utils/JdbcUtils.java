@@ -18,13 +18,29 @@ public class JdbcUtils {
         }
         return connection;
     }
+
     public static PreparedStatement createStatement(String sql) throws SQLException {
         try {
            connection = JdbcUtils.getConnection();
-            return connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            return connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
             return null;
         }
     }
+    public static PreparedStatement createStatement2(String sql, int typeScrollInsensitive, int concurUpdatable) throws SQLException {
+        try {
+            connection = JdbcUtils.getConnection();
+            return connection.prepareStatement(sql, typeScrollInsensitive, concurUpdatable);
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
+    /*public static void main(String[] args) throws SQLException, ClassNotFoundException {
+        DatabaseMetaData dbmd = getConnection().getMetaData();
+        boolean isSupported = dbmd.supportsResultSetType(ResultSet.TYPE_SCROLL_INSENSITIVE);
+        System.out.println(isSupported);
+    }*/
 }

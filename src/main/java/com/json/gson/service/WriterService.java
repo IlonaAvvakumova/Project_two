@@ -26,8 +26,7 @@ public class WriterService {
     }
 
     public void delete(Integer id) {
-        Writer w = new Writer();
-        writerRepository.deleteById(id, w);
+         writerRepository.deleteById(id);
     }
 
     public List<Writer> getAll() {

@@ -1,6 +1,7 @@
 package com.json.gson.model;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class Post {
@@ -11,59 +12,7 @@ public class Post {
     private PostStatus status;
     private List<Label> labels;
     private Writer writer;
-    private Integer writerID ;
-    private Integer postId ;
-    private Integer labelId;
-    private String nameLabel;
-
-
-    public Integer getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Integer postId) {
-        this.postId = postId;
-    }
-
-    public Integer getLabelId() {
-        return labelId;
-    }
-
-    public void setLabelId(Integer labelId) {
-        this.labelId = labelId;
-    }
-
-    public String getNameLabel() {
-        return nameLabel;
-    }
-
-    public void setNameLabel(String nameLabel) {
-        this.nameLabel = nameLabel;
-    }
-
-    public Integer getWriterID() {
-        return writerID;
-    }
-
-    public void setWriterID(Integer writerID) {
-        this.writerID = writerID;
-    }
-
-    public Writer getWriter() {
-        return writer;
-    }
-
-    public void setWriter(Writer writer) {
-        this.writer = writer;
-    }
-
-    public PostStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(PostStatus status) {
-        this.status = status;
-    }
+    private Map<Integer, String> mapLab;
 
     public Integer getId() {
         return id;
@@ -97,12 +46,36 @@ public class Post {
         this.created = created;
     }
 
+    public PostStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PostStatus status) {
+        this.status = status;
+    }
+
     public List<Label> getLabels() {
         return labels;
     }
 
     public void setLabels(List<Label> labels) {
         this.labels = labels;
+    }
+
+    public Writer getWriter() {
+        return writer;
+    }
+
+    public void setWriter(Writer writer) {
+        this.writer = writer;
+    }
+
+    public Map<Integer, String> getMapLab() {
+        return mapLab;
+    }
+
+    public void setMapLab(Map<Integer, String> mapLab) {
+        this.mapLab = mapLab;
     }
 
     @Override
@@ -113,11 +86,9 @@ public class Post {
                 ", updated=" + updated +
                 ", created=" + created +
                 ", status=" + status +
-
-                ", writerID=" + writerID +
-                ", postId=" + postId +
-                ", labelId=" + labelId +
-                ", nameLabel='" + nameLabel + '\'' +
+                ", labels=" + labels +
+                ", writer=" + writer +
+                ", mapLab=" + mapLab +
                 '}';
     }
 }

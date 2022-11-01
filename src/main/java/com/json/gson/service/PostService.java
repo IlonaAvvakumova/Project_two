@@ -27,9 +27,9 @@ public class PostService {
         return postRepository.update(post);
     }
 
-    public Post delete(Integer id, Post post) {
-        post.setStatus(PostStatus.DELETED);
-       return postRepository.deleteById(id, post);
+    public void delete(Integer id) {
+
+        postRepository.deleteById(id);
     }
 
     public List<Post> getAll() {

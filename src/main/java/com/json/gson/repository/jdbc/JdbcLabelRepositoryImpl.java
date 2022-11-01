@@ -7,6 +7,7 @@ import com.json.gson.utils.JdbcUtils;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -103,7 +104,7 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
     }
 
     @Override
-    public Label deleteById(Integer id, Label label) {
+    public void deleteById(Integer id) {
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_LABEL)) {
             preparedStatement.setInt(1, id);
@@ -111,8 +112,8 @@ public class JdbcLabelRepositoryImpl implements LabelRepository {
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-            return null;
+
         }
-        return label;
+
     }
 }
