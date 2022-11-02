@@ -1,5 +1,8 @@
 package com.json.gson.repository.jdbc;
 
+import com.json.gson.model.Label;
+import com.json.gson.model.Post;
+import com.json.gson.model.PostStatus;
 import com.json.gson.model.Writer;
 import com.json.gson.repository.WriterRepository;
 import com.json.gson.utils.JdbcUtils;
@@ -10,7 +13,9 @@ import java.util.List;
 
 public class JdbcWriterRepositoryImpl implements WriterRepository {
     private final String GET_ALL_WRITERS = "SELECT * FROM writers";
-    private final String GET_WRITER_BY_ID = "SELECT * FROM writers WHERE id = ?";
+    //private final String GET_WRITER_BY_ID = "SELECT * FROM writers WHERE id = ?";
+    private final String GET_WRITER_BY_ID = "SELECT * FROM writers as w " +
+            "LEFT JOIN posts as p on w.id= p.writer_id WHERE p.writer_id =?;" ;
     private final String UPDATE_WRITER = "UPDATE writers SET first_name = (?), last_name = (?) where id = ?;";
     private final String CREATE_WRITER = "INSERT INTO writers (first_name, last_name) VALUES (?,?);";
     private final String DELETE_WRITER = " DELETE FROM writers where id = ?;";
@@ -22,6 +27,25 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
                 w.setId(resultSet.getInt("id"));
                 w.setFirstName(resultSet.getString("first_name"));
                 w.setLastName(resultSet.getString("last_name"));
+
+                List<Post> postList = new ArrayList<>();
+                resultSet.last();
+                int row = resultSet.getRow();
+                resultSet.first();
+                while (row != 0) {
+                    Post p = new Post();
+                    p.setId(resultSet.getInt("id"));
+                    p.setContent(resultSet.getString("content"));
+                    p.setCreated(resultSet.getLong("created"));
+                    p.setUpdated(resultSet.getLong("updated"));
+                    p.setStatus(PostStatus.valueOf(resultSet.getString("status")));
+                   // p.setWriter(w);
+                    if (p.getId() != 0)
+                        postList.add(p);
+                    row--;
+                    resultSet.next();
+                }
+                w.setPosts(postList);
                 return w;
             } catch (SQLException throwables) {
                 System.out.println("Error occurred: " + throwables.getMessage());
@@ -49,10 +73,11 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public Writer getById(Integer id) {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_WRITER_BY_ID)){
-             preparedStatement.setInt(1, id);
-             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()) {
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement2(GET_WRITER_BY_ID, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_UPDATABLE)) {
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 return (convertFromResult(resultSet));
             }
             return null;
@@ -66,16 +91,15 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
     public Writer create(Writer writer) {
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(CREATE_WRITER)) {
-            preparedStatement.setString(1,writer.getFirstName());
-            preparedStatement.setString(2,writer.getLastName());
+            preparedStatement.setString(1, writer.getFirstName());
+            preparedStatement.setString(2, writer.getLastName());
             preparedStatement.executeUpdate();
 
             ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 writer.setId(generatedKeys.getInt(1));
 
-            }
-            else {
+            } else {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
         } catch (SQLException throwables) {
@@ -88,9 +112,9 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
     public Writer update(Writer writer) {
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(UPDATE_WRITER)) {
-            preparedStatement.setString(1,writer.getFirstName());
-            preparedStatement.setString(2,writer.getLastName());
-            preparedStatement.setInt(3,writer.getId());
+            preparedStatement.setString(1, writer.getFirstName());
+            preparedStatement.setString(2, writer.getLastName());
+            preparedStatement.setInt(3, writer.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -102,17 +126,14 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
     public void deleteById(Integer id) {
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_WRITER)) {
-            preparedStatement.setInt(1,id);
+            preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
 
-        }catch (SQLIntegrityConstraintViolationException e){
+        } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Нельзя удалить, используется как внешний ключ");
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-
-
         }
-
     }
 }

@@ -44,8 +44,8 @@ public class PostView {
 
     private List<Label> selectLabels() {
         List<Label> result = new ArrayList<>();
-        List<Label> labelList = labelController.getAllLabels();
-        System.out.println("All labels: " + labelList);
+         List<Label> labelList = labelController.getAllLabels();
+         System.out.println("All labels: " + labelList);
         System.out.println("Введите ID, цифра -1 делает окончательный выбор");
         while (true) {
             Integer choice = scan.nextInt();
@@ -55,7 +55,6 @@ public class PostView {
             Label currentLabel = labelList.stream().filter(label -> label.getId().equals(choice)).findFirst().orElse(null);
             result.add(currentLabel);
         }
-
     }
 
     public void updatePostView() {

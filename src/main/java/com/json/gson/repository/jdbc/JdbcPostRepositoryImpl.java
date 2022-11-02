@@ -34,7 +34,8 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             "WHERE p.id = ?;";
     private final String GET = "Select id from posts; ";
     private final String UPDATE_POST = "UPDATE posts SET content= (?), updated=?,  status=? where id = ?;";
-    private final String UPDATE_POST_LABEL = "UPDATE post_labels SET label_id= (?) where post_id = ?;";
+    //private final String UPDATE_POST_LABEL = "UPDATE post_labels SET label_id= (?) where post_id = ?;";
+     private final String UPDATE_POST_LABEL = "DELETE post_labels FROM post_labels where post_id = ?;";
     private final String CREATE_POST = "INSERT INTO posts (content,created, updated, status, writer_id) VALUES (?,?,?,?,?);";
     private final String CREATE_POST_LABEL = "INSERT INTO post_labels (post_id, label_id) VALUES (?,?);";
     private final String DELETE_POST = "UPDATE posts SET status= (?) where id = ?;";
@@ -49,7 +50,6 @@ public class JdbcPostRepositoryImpl implements PostRepository {
 
                 Post p = new Post();
                 p.setId(resultSet.getInt("id"));
-
                 p.setContent(resultSet.getString("content"));
                 p.setCreated(resultSet.getLong("created"));
                 p.setUpdated(resultSet.getLong("updated"));
@@ -64,10 +64,12 @@ public class JdbcPostRepositoryImpl implements PostRepository {
                     Label l = new Label();
                     l.setId(resultSet.getInt("l.id"));
                     l.setName(resultSet.getString("l.name"));
-                    labelList.add(l);
+                    if (l.getId() != 0)
+                        labelList.add(l);
                     row--;
                     resultSet.next();
                 }
+
                 p.setLabels(labelList);
 
                 return p;
@@ -94,23 +96,22 @@ public class JdbcPostRepositoryImpl implements PostRepository {
          }
          return null;
      }*/
-    private Post convertFromResult2(Map<Integer,Post> posts,ResultSet resultSet) {
+/*    private Post convertFromResult2(Map<Integer, Post> posts, ResultSet resultSet) {
 
         if (resultSet != null) {
             try {
-                if(posts.containsKey(resultSet.getInt("id")))
-                {
+                if (posts.containsKey(resultSet.getInt("id"))) {
                     Post p = posts.get(resultSet.getInt("id"));
-                    Map<Integer, String> labelmap =  p.getMapLab();
+                    Map<Integer, String> labelmap = p.getMapLab();
                     Label l = new Label();
                     l.setId(resultSet.getInt("l.id"));
                     l.setName(resultSet.getString("l.name"));
-                    labelmap.put(l.getId(),l.getName());
+                    labelmap.put(l.getId(), l.getName());
                     p.setMapLab(labelmap);
-                    posts.put(resultSet.getInt("id"),p);
+                    posts.put(resultSet.getInt("id"), p);
                     return p;
-                }else {
-                    Map<Integer,String> labelMap = new HashMap();
+                } else {
+                    Map<Integer, String> labelMap = new HashMap();
                     Writer writer = new Writer();
                     writer.setId(resultSet.getInt("w.id"));
                     writer.setFirstName(resultSet.getString("w.first_name"));
@@ -128,7 +129,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
                     l.setId(resultSet.getInt("l.id"));
                     l.setName(resultSet.getString("l.name"));
 
-                    labelMap.put(l.getId(),l.getName());
+                    labelMap.put(l.getId(), l.getName());
                     p.setMapLab(labelMap);
                     return p;
                 }
@@ -139,36 +140,38 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             }
         } else System.out.println("Нет данных для ввода");
         return null;
-    }
+    }*/
 
 
-    public Map<Integer,Post> getAllTwo() {
+/*    public Map<Integer, Post> getAllTwo() {
         Map<Integer, Post> posts = new HashMap<>();
 
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement2(GET_ALL_POSTS, ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
              ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
-              posts.put(convertFromResult2(posts,resultSet).getId(),convertFromResult2(posts,resultSet));
+                posts.put(convertFromResult2(posts, resultSet).getId(), convertFromResult2(posts, resultSet));
 
             }
+            List<Label> list = new ArrayList(posts.values());
             return posts;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
-    }
+    }*/
+
     @Override
     public List<Post> getAll() {
         List<Post> posts = new ArrayList<>();
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement2(GET_ALL_POSTS, ResultSet.TYPE_SCROLL_INSENSITIVE,
                 ResultSet.CONCUR_UPDATABLE);
              ResultSet resultSet = preparedStatement.executeQuery()) {
-           int indexList=1;
-           while (resultSet.next()) {
-               posts.add(getById(indexList));
-               indexList++;
-           }
+            int indexList = 1;
+            while (resultSet.next()) {
+                posts.add(getById(indexList));
+                indexList++;
+            }
             return posts;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -211,7 +214,7 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             }
 
 
-           for (Label l : post.getLabels()
+            for (Label l : post.getLabels()
             ) {
                 try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(CREATE_POST_LABEL)) {
 
@@ -245,20 +248,37 @@ public class JdbcPostRepositoryImpl implements PostRepository {
             preparedStatement.setString(3, post.getStatus().name());
             preparedStatement.setInt(4, post.getId());
             preparedStatement.executeUpdate();
-            for (Label l : post.getLabels()) {
+
+
+        /*    for (Label l : post.getLabels()) {
                 try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(UPDATE_POST_LABEL)) {
 
                     preparedStatementGetID.setInt(1, l.getId());
                     preparedStatementGetID.setInt(2, post.getId());
-
+                    preparedStatementGetID.executeUpdate();
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-            }
+            }*/
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+        try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(UPDATE_POST_LABEL)) {
+            preparedStatementGetID.setInt(1, post.getId());
+            preparedStatementGetID.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        for (Label l : post.getLabels()) {
+            try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(CREATE_POST_LABEL)) {
 
+                preparedStatementGetID.setInt(1, post.getId());
+                preparedStatementGetID.setInt(2, l.getId());
+                preparedStatementGetID.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
         try (PreparedStatement preparedStatement2 = JdbcUtils.createStatement("SELECT * FROM posts WHERE id = " + post.getId() + " ;");
              ResultSet resultSet = preparedStatement2.executeQuery()) {
             while (resultSet.next()) {
@@ -279,11 +299,17 @@ public class JdbcPostRepositoryImpl implements PostRepository {
         Post p = new Post();
         p.setStatus(PostStatus.DELETED);
 
-      try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_POST)) {
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_POST)) {
 
             preparedStatement.setInt(2, id);
             preparedStatement.setString(1, p.getStatus().name());
             preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        try (PreparedStatement preparedStatementGetID = JdbcUtils.createStatement(UPDATE_POST_LABEL)) {
+            preparedStatementGetID.setInt(1, id);
+            preparedStatementGetID.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

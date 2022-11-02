@@ -12,7 +12,6 @@ public class Post {
     private PostStatus status;
     private List<Label> labels;
     private Writer writer;
-    private Map<Integer, String> mapLab;
 
     public Integer getId() {
         return id;
@@ -70,14 +69,6 @@ public class Post {
         this.writer = writer;
     }
 
-    public Map<Integer, String> getMapLab() {
-        return mapLab;
-    }
-
-    public void setMapLab(Map<Integer, String> mapLab) {
-        this.mapLab = mapLab;
-    }
-
     @Override
     public String toString() {
         return "Post{" +
@@ -88,7 +79,6 @@ public class Post {
                 ", status=" + status +
                 ", labels=" + labels +
                 ", writer=" + writer +
-                ", mapLab=" + mapLab +
                 '}';
     }
 }
