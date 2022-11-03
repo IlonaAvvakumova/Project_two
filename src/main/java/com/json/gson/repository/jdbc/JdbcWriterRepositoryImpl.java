@@ -1,21 +1,20 @@
 package com.json.gson.repository.jdbc;
 
-import com.json.gson.model.Label;
 import com.json.gson.model.Post;
 import com.json.gson.model.PostStatus;
 import com.json.gson.model.Writer;
 import com.json.gson.repository.WriterRepository;
 import com.json.gson.utils.JdbcUtils;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcWriterRepositoryImpl implements WriterRepository {
-    private final String GET_ALL_WRITERS = "SELECT * FROM writers";
-    //private final String GET_WRITER_BY_ID = "SELECT * FROM writers WHERE id = ?";
+
+    private final String GET_ALL_WRITERS = "SELECT * FROM writers as w " +
+            "LEFT JOIN posts as p on w.id= p.writer_id";
     private final String GET_WRITER_BY_ID = "SELECT * FROM writers as w " +
-            "LEFT JOIN posts as p on w.id= p.writer_id WHERE p.writer_id =?;" ;
+            "LEFT JOIN posts as p on w.id= p.writer_id WHERE w.id =?;";
     private final String UPDATE_WRITER = "UPDATE writers SET first_name = (?), last_name = (?) where id = ?;";
     private final String CREATE_WRITER = "INSERT INTO writers (first_name, last_name) VALUES (?,?);";
     private final String DELETE_WRITER = " DELETE FROM writers where id = ?;";
@@ -38,8 +37,9 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
                     p.setContent(resultSet.getString("content"));
                     p.setCreated(resultSet.getLong("created"));
                     p.setUpdated(resultSet.getLong("updated"));
-                    p.setStatus(PostStatus.valueOf(resultSet.getString("status")));
-                   // p.setWriter(w);
+                    if (p.getContent() != null) {
+                        p.setStatus(PostStatus.valueOf(resultSet.getString("status")));
+                    } else p.setStatus(null);
                     if (p.getId() != 0)
                         postList.add(p);
                     row--;
@@ -57,13 +57,16 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public List<Writer> getAll() {
-        try (PreparedStatement preparedStatement = JdbcUtils.createStatement(GET_ALL_WRITERS);
+        List<Writer> writers = new ArrayList<>();
+        try (PreparedStatement preparedStatement = JdbcUtils.createStatement2(GET_ALL_WRITERS, ResultSet.TYPE_SCROLL_INSENSITIVE,
+                ResultSet.CONCUR_UPDATABLE);
              ResultSet resultSet = preparedStatement.executeQuery()) {
-            List<Writer> writers = new ArrayList<>();
-            while (resultSet.next()) {
-                writers.add(convertFromResult(resultSet));
-            }
 
+            int indexList = 1;
+            while (resultSet.next()) {
+                writers.add(getById(indexList));
+                indexList++;
+            }
             return writers;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -89,7 +92,6 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public Writer create(Writer writer) {
-
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(CREATE_WRITER)) {
             preparedStatement.setString(1, writer.getFirstName());
             preparedStatement.setString(2, writer.getLastName());
@@ -110,7 +112,6 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public Writer update(Writer writer) {
-
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(UPDATE_WRITER)) {
             preparedStatement.setString(1, writer.getFirstName());
             preparedStatement.setString(2, writer.getLastName());
@@ -124,7 +125,6 @@ public class JdbcWriterRepositoryImpl implements WriterRepository {
 
     @Override
     public void deleteById(Integer id) {
-
         try (PreparedStatement preparedStatement = JdbcUtils.createStatement(DELETE_WRITER)) {
             preparedStatement.setInt(1, id);
             preparedStatement.executeUpdate();
